@@ -12,20 +12,23 @@ function App() {
     duration: 10,
   });
 
+  const inputIsValid = Object.values(userInput).every(value => value > 0);
+  
   function handleChange(inputIdentifier, newValue) {
     setUserInput(prevUserInput => {
       return {
         ...prevUserInput,
-        [inputIdentifier]: newValue
+        [inputIdentifier]: +newValue  // the "+" sign is used to convert the string to a number
       };
     });
   }
-
   return (
     <div>
       <Header />
-      <UserInput onChange={handleChange} userInput={userInput}/>
-      <Results input={userInput}/>
+      <UserInput onChange={handleChange} userInput={userInput} />
+      {!inputIsValid && <p className='center'>Please enter valid input</p>}
+      {inputIsValid && <Results input={userInput} />}
+      {/* {inputIsValid ? <Results input={userInput} /> : <p>Please enter valid input</p>} */}
     </div>
   )
 }
